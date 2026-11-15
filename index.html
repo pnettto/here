@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>here</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  body.idle, body.idle * { cursor: none !important; }
+  canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; display: block; }
+
+  #intro {
+    position: fixed; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 2.2rem;
+    background: radial-gradient(circle at 50% 50%, rgba(40,20,10,.25), #000 60%);
+    color: #e9e2d6; cursor: pointer; transition: opacity 3.5s ease;
+    font-family: "Cormorant Garamond", "EB Garamond", Garamond, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    z-index: 3;
+  }
+  #intro.gone { opacity: 0; pointer-events: none; }
+  #intro .title {
+    margin: 0; font-weight: 300; font-size: clamp(2.2rem, 5vw, 4.5rem);
+    letter-spacing: .5em; text-indent: .5em; opacity: 0; animation: rise 5s 0.6s ease forwards;
+  }
+  #intro .hint {
+    margin: 0; font-size: clamp(.8rem, 1.1vw, 1rem); letter-spacing: .3em; text-transform: lowercase; text-align: center; padding: 0 1rem;
+    opacity: 0; animation: rise 4s 2.6s ease forwards; color: #a99e8c;
+  }
+  #intro .hint span[data-silent] { border-bottom: 1px solid rgba(169,158,140,.3); padding-bottom: 2px; }
+  #intro .hint span[data-silent]:hover { color: #e9e2d6; }
+  #intro .dot {
+    width: 6px; height: 6px; border-radius: 50%; background: #ffe9c4;
+    box-shadow: 0 0 20px 6px rgba(255,190,120,.5), 0 0 80px 20px rgba(255,140,80,.15);
+    animation: breathe 10s ease-in-out infinite;
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @keyframes breathe { 0%,100% { transform: scale(.7); opacity: .6; } 50% { transform: scale(1.5); opacity: 1; } }
+
+  #words {
+    position: fixed; left: 0; right: 0; bottom: 12vh; z-index: 2;
+    display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
+    padding: 0 2rem; text-align: center; pointer-events: none;
+    opacity: 0; transition: opacity 3.5s ease;
+  }
+  #words.on { opacity: 1; }
+  #quote { transition: opacity 2.2s ease, filter 2.2s ease; min-height: 1.45em; }
+  #quote.out { opacity: 0; filter: blur(4px); }
+  #quote .w { display: inline-block; opacity: 0; filter: blur(5px); transform: translateY(3px);
+    transition-property: opacity, filter, transform; transition-timing-function: ease-out; }
+  #quote .w.on { opacity: 1; filter: blur(0); transform: none; }
+  #attr { opacity: 0; transition: opacity 2.5s ease; }
+  #attr.on { opacity: 1; }
+  #quote {
+    color: rgba(245, 238, 226, .86);
+    font-family: "Cormorant Garamond", "EB Garamond", Garamond, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    font-weight: 300; font-style: italic; letter-spacing: .04em; line-height: 1.45;
+    font-size: clamp(1.15rem, 2.4vw, 2.2rem); max-width: min(28em, 86vw);
+    text-shadow: 0 0 28px rgba(0,0,0,.65);
+  }
+  #attr {
+    color: rgba(224, 214, 194, .55);
+    font-family: "Cormorant Garamond", "EB Garamond", Garamond, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    font-weight: 500; letter-spacing: .22em; text-transform: uppercase;
+    font-size: clamp(.68rem, 1vw, .92rem);
+    text-shadow: 0 0 18px rgba(0,0,0,.6);
+  }
+
+  #hint {
+    position: fixed; bottom: 22px; left: 0; right: 0; text-align: center; z-index: 2;
+    font: 12px/1 ui-sans-serif, system-ui, sans-serif; letter-spacing: .2em; color: rgba(255,255,255,.35);
+    opacity: 0; transition: opacity 1.2s ease; pointer-events: none;
+  }
+  #hint.show { opacity: 1; }
+</style>
+</head>
+<body>
+  <canvas id="c"></canvas>
+
+  <div id="intro">
+    <div class="dot"></div>
+    <p class="title">here</p>
+    <p class="hint">click to begin &nbsp;·&nbsp; with sound &nbsp;·&nbsp; or <span data-silent>in silence</span></p>
+  </div>
+
+  <div id="words"><div id="quote"></div><div id="attr"></div></div>
+  <div id="hint">← → &nbsp;drift &nbsp;&nbsp;·&nbsp;&nbsp; M &nbsp;sound &nbsp;&nbsp;·&nbsp;&nbsp; T &nbsp;words &nbsp;&nbsp;·&nbsp;&nbsp; F &nbsp;fullscreen</div>
+
+  <script src="js/shaders.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/quotes.js"></script>
+  <script src="js/words.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
