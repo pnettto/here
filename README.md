@@ -12,7 +12,9 @@ Nothing is a video. Every frame is generated live on your GPU, so no two moments
 
 ## Begin
 
-Open `index.html` in a modern browser and click once. No install, no server.
+**→ [pnettto.github.io/here](https://pnettto.github.io/here/)**
+
+Or open `index.html` in a modern browser and click once. No install, no server.
 
 Dim the room. Turn the sound up a little. Stay as long as you like.
 
